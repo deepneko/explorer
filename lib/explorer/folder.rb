@@ -32,6 +32,7 @@ module Explorer
             @fileList.push(basename)
           end
         end
+        @filelist.sort
         @dir.close
       rescue
         return

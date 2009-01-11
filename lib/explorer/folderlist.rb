@@ -15,7 +15,7 @@ module Explorer
     def show
       html = "<img src=\"" + @const.DIR_ICON + "\" align=\"absmiddle\" border=0>"
       html += "<b> " + @const.SEARCH_DIR + "</b><br>"
-      return @root.show(html)
+      @root.show(html)
     end
 
     def allfile
