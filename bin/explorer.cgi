@@ -9,7 +9,7 @@ dir = cgi.params['dir'][0]
 
 cgi.out(
         "type"	=> "text/html" ,
-        "charset"	=> "UTF-8"
+        "charset"	=> "Shift-JIS"
         ) do
   cgi.html do
     cgi.head{ cgi.title{'File Search'} } +
