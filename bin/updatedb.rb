@@ -10,6 +10,13 @@ Explorer.createtable
 allpath = $con.execute("select path from filelist").flatten
 alldate = $con.execute("select date from filelist").flatten
 
+# if file doesn't exist, delete from database
+allpath.each do |path|
+  if File.exists?(path)
+    $con.execute("delete from filelist where path='#{path}'")
+  end
+end
+
 # update or insert
 Explorer.allfile.each do |path|
   date = File.mtime(path).strftime('%Y-%m-%d %H:%M:%S')
