@@ -12,7 +12,7 @@ alldate = $con.execute("select date from filelist").flatten
 
 # if file doesn't exist, delete from database
 allpath.each do |path|
-  if File.exists?(path)
+  if !File.exists?(path)
     $con.execute("delete from filelist where path='#{path}'")
   end
 end
