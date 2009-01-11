@@ -25,11 +25,11 @@ A{text-decoration:none}
 HEAD
 
   $form = <<"FORM"
-<b>ファイルの検索</b>
+<b>File Search</b>
 <br><br>
 <form action="./explorer.cgi" method="get">
-キーワード: <input type="text" name="keyword"><br>
-<input type="submit" value="検索">
+Keyword: <input type="text" name="keyword"><br>
+<input type="submit" value="Search">
 </form>
 <hr>
 FORM
@@ -42,7 +42,7 @@ FORM
       result += " [#{elem[1]}]<b> <a href=\"" + $const.CGI_PATH + "?dir=" + dir + "\">"
       result += File.basename(elem[0]) + "</a></b><br>"
     end
-    "<b>更新ファイル</b>" + result + "<hr>"
+    "<b>Recent Update</b>" + result + "<hr>"
   end
 
   def self.search(keyword)
