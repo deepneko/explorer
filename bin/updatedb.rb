@@ -29,6 +29,10 @@ Explorer.allfile.each do |path|
     end
   else
     print "insert:" + date + " " + path + "\n"
-    $con.execute("insert into filelist(path, date) values('#{path}', '#{date}')")
+    begin
+      $con.execute("insert into filelist(path, date) values ('#{path}', '#{date}')")
+    rescue SQLite3::SQLException
+      print "Exception:" + date + " " + path + "\n"
+    end
   end
 end
