@@ -79,7 +79,9 @@ module Explorer
           html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         end
         html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
-        html += " " + file + "<br>"
+        if file == @basename
+          html += " <font color=red>" + file + "</font><br>"
+        end
       end
       
       return html
