@@ -9,7 +9,7 @@ module Explorer
 
     def open(path)
       path = path.sub(@const.SEARCH_DIR, "./")
-      if File.file(path)
+      if File.file?(path)
         dir = File.dirname(path) + "/"
         file = File.basename(path)
         @root.open(dir, file)
