@@ -53,8 +53,6 @@ FORM
     
     result = ""
     for i in searchResult
-      #path = File.dirname(i) + "/"
-      #result += "<b> <a href=\"" + $const.CGI_PATH + "?dir=" + path + "\">"
       result += "<b> <a href=\"" + $const.CGI_PATH + "?dir=" + i + "\">"
       result += i + "</a></b><br>"
     end
