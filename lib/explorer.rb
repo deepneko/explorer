@@ -40,8 +40,7 @@ FORM
     cur.each do |elem|
       file = File.basename(elem[0])
       dir = File.dirname(elem[0]) + "/"
-      result += " [#{elem[1]}]<b> <a href=\"" + $const.CGI_PATH + "?dir=" + dir
-      #result +=  "&file=" + file if file
+      result += " [#{elem[1]}]<b> <a href=\"" + $const.CGI_PATH + "?dir=" + elem[0]
       result += "\">" + file + "</a></b><br>"
     end
     "<b>Recent Update</b>" + result + "<hr>"
@@ -54,8 +53,9 @@ FORM
     
     result = ""
     for i in searchResult
-      path = File.dirname(i) + "/"
-      result += "<b> <a href=\"" + $const.CGI_PATH + "?dir=" + path + "\">"
+      #path = File.dirname(i) + "/"
+      #result += "<b> <a href=\"" + $const.CGI_PATH + "?dir=" + path + "\">"
+      result += "<b> <a href=\"" + $const.CGI_PATH + "?dir=" + i + "\">"
       result += i + "</a></b><br>"
     end
     $head + $form + result

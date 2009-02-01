@@ -6,7 +6,7 @@ module Explorer
       @fileList = []
       @dirList = []
       @folderList = Hash.new
-      @path = path
+      @path = File.dirname(path) + "/"
       @basename = File.basename(path)
       @absolutePath = @const.SEARCH_DIR + path.sub("./", "")
       @deps = deps
@@ -82,7 +82,7 @@ module Explorer
         if file == @basename
           html += " <font color=red>" + file + "</font><br>"
         else
-          html += " " + file + @basename + "<br>"          
+          html += " " + file + @basename + "<br>"
         end
       end
       
