@@ -1,6 +1,6 @@
 module Explorer
   class Folder
-    def initialize(path, deps, focus=nil)
+    def initialize(path, deps)
       @const = SearchConst.new
 
       @fileList = []

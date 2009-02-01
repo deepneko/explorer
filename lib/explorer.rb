@@ -41,7 +41,7 @@ FORM
       file = File.basename(elem[0])
       dir = File.dirname(elem[0]) + "/"
       result += " [#{elem[1]}]<b> <a href=\"" + $const.CGI_PATH + "?dir=" + dir
-      result +=  "&file=" + file if file
+      #result +=  "&file=" + file if file
       result += "\">" + file + "</a></b><br>"
     end
     "<b>Recent Update</b>" + result + "<hr>"
