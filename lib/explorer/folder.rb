@@ -6,7 +6,8 @@ module Explorer
       @fileList = []
       @dirList = []
       @folderList = Hash.new
-      @path = File.dirname(path) + "/"
+      @path = path
+      @focusfile
       @basename = File.basename(path)
       @absolutePath = @const.SEARCH_DIR + path.sub("./", "")
       @deps = deps
@@ -39,7 +40,9 @@ module Explorer
       end
     end
     
-    def open(targetPath)
+    def open(targetPath, file=nil)
+      @focusfile = file
+
       if !@open
         for dir in @dirList
           @folderList[dir] = Folder.new(@path + dir + "/", @deps+1)
@@ -50,7 +53,7 @@ module Explorer
       childFolder = targetPath.sub(@path, "").split(/\//).shift
       
       if childFolder != nil
-        @folderList[childFolder].open(targetPath)
+        @folderList[childFolder].open(targetPath, file)
       else
         return
       end
@@ -79,10 +82,10 @@ module Explorer
           html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         end
         html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
-        if file == @basename
+        if file == @focusfile
           html += " <font color=red>" + file + "</font><br>"
         else
-          html += " " + file + @basename + "<br>"
+          html += " " + file + "<br>"
         end
       end
       
