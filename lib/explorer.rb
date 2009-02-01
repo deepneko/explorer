@@ -38,9 +38,11 @@ FORM
     cur = $con.execute("select path, date from filelist order by date desc limit #{n}")
     result = "<br>"
     cur.each do |elem|
+      file = File.basename(elem[0])
       dir = File.dirname(elem[0]) + "/"
-      result += " [#{elem[1]}]<b> <a href=\"" + $const.CGI_PATH + "?dir=" + dir + "\">"
-      result += File.basename(elem[0]) + "</a></b><br>"
+      result += " [#{elem[1]}]<b> <a href=\"" + $const.CGI_PATH + "?dir=" + dir
+      result +=  "&file=" + file if file
+      result += "\">" + file + "</a></b><br>"
     end
     "<b>Recent Update</b>" + result + "<hr>"
   end
