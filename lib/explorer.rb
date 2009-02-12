@@ -34,13 +34,14 @@ Keyword: <input type="text" name="keyword"><br>
 <hr>
 FORM
 
-  def self.listnew(n=$const.LISTNEW_SIZE)
+  def self.listnew(n=$const.LISTNEW_SIZE, notdefault=nil)
     cur = $con.execute("select path, date from filelist order by date desc limit #{n}")
     result = "<br>"
     cur.each do |elem|
       file = File.basename(elem[0])
       dir = File.dirname(elem[0]) + "/"
       result += " [#{elem[1]}]<b> <a href=\"" + $const.CGI_PATH + "?dir=" + elem[0]
+      result += "&count=" + n if notdefault
       result += "\">" + file + "</a></b><br>"
     end
     "<b>Recent Update</b>" + result + "<hr>"
@@ -70,7 +71,7 @@ FORM
   def self.show(count=nil)
     $const.LISTNEW_SIZE = count if count
     if count
-      $head + $form + listnew(count) + $rootFolder.show
+      $head + $form + listnew(count, true) + $rootFolder.show
     else
       $head + $form + listnew + $rootFolder.show
     end
