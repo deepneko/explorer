@@ -34,14 +34,14 @@ Keyword: <input type="text" name="keyword"><br>
 <hr>
 FORM
 
-  def self.listnew(n=$const.LISTNEW_SIZE, notdefault=nil)
+  def self.listnew(n=$const.LISTNEW_SIZE)
     cur = $con.execute("select path, date from filelist order by date desc limit #{n}")
     result = "<br>"
     cur.each do |elem|
       file = File.basename(elem[0])
       dir = File.dirname(elem[0]) + "/"
       result += " [#{elem[1]}]<b> <a href=\"" + $const.CGI_PATH + "?dir=" + elem[0]
-      result += "&count=" + n if notdefault
+      result += "&count=" + n
       result += "\">" + file + "</a></b><br>"
     end
     html = "<b>Recent Update</b> "
@@ -53,7 +53,6 @@ FORM
   end
 
   def self.search(keyword, count=nil)
-    $const.LISTNEW_SIZE = count if count
     st = SearchThread.new($const.SEARCH_DIR, keyword, nil)
     st.start
     searchResult = st.getSearchResult
@@ -61,7 +60,7 @@ FORM
     result = ""
     for i in searchResult
       result += "<b> <a href=\"" + $const.CGI_PATH + "?dir=" + i
-      result += "&count=" + count if count
+      result += "&count=" + count
       result += "\">" + i + "</a></b><br>"
     end
     $head + $form + result
@@ -74,9 +73,9 @@ FORM
   
   def self.show(count=nil)
     if count
-      $head + $form + listnew(count, true) + $rootFolder.show(count)
+      $head + $form + listnew(count) + $rootFolder.show(count)
     else
-      $head + $form + listnew + $rootFolder.show
+      $head + $form + listnew + $rootFolder.show($count.LISTNEW_SIZE)
     end
   end
 
