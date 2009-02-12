@@ -75,7 +75,7 @@ FORM
     if count
       $head + $form + listnew(count) + $rootFolder.show(count)
     else
-      $head + $form + listnew + $rootFolder.show($count.LISTNEW_SIZE)
+      $head + $form + listnew + $rootFolder.show($const.LISTNEW_SIZE)
     end
   end
 
