@@ -71,7 +71,7 @@ module Explorer
         end
         html += "<img src=\"" + @const.DIR_ICON + "\" align=\"absmiddle\" border=0>"
         html += "<b> <a href=\"" + @const.CGI_PATH + "?dir=" + folder.getAbsolutePath
-        html += "&count=" + count
+        html += "&count=" + count.to_s
         html += "\">" + folder.getBasename + "</a></b><br>"
         if folder.isOpen
           html = folder.show(html, count)
