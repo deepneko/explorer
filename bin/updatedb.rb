@@ -29,12 +29,12 @@ Explorer.allfile.each do |path|
   if i = allpath.index(path)
     if alldate[i] != date
       print "update:" + date + " " + path + "\n"
-      $con.execute("update filelist set date='#{date}' where path='#{path}'")
+      $con.execute("update filelist set date='#{date}' where path=\"#{path}\"")
     end
   else
     print "insert:" + date + " " + path + "\n"
     begin
-      $con.execute("insert into filelist(path, date) values ('#{path}', '#{date}')")
+      $con.execute("insert into filelist(path, date) values (\"#{path}\", '#{date}')")
     rescue SQLite3::SQLException
       print "Exception:" + date + " " + path + "\n"
     end
