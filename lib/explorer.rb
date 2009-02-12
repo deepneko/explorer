@@ -47,7 +47,7 @@ FORM
     html = "<b>Recent Update</b> "
     html += "<a href=\"./explorer.cgi\" style=\"color: #CD5C5C\">default</a> "
     html += "<a href=\"./explorer.cgi?count=50\" style=\"color: #CD5C5C\">50</a> "
-    html += "<a href=\"./explorer.cgi?count=50\" style=\"color: #CD5C5C\">100</a>"
+    html += "<a href=\"./explorer.cgi?count=100\" style=\"color: #CD5C5C\">100</a>"
     html += result + "<hr>"
     html
   end
