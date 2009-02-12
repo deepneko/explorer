@@ -15,22 +15,12 @@ cgi.out(
   cgi.html do
     cgi.head{ cgi.title{'File Search'} } +
       cgi.body do
-      if count
-        if keyword
-          Explorer.search(keyword, count)
-        elsif dir
-          Explorer.explorer(dir, count)
-        else
-          Explorer.show(count)
-        end
+      if keyword
+        Explorer.search(keyword, count)
+      elsif dir
+        Explorer.explorer(dir, count)
       else
-        if keyword
-          Explorer.search(keyword)
-        elsif dir
-          Explorer.explorer(dir)
-        else
-          Explorer.show
-        end
+        Explorer.show(count)
       end
     end
   end

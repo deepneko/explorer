@@ -69,9 +69,9 @@ FORM
   
   def self.show(count=nil)
     if count
-      $head + $form + listnew(count, true) + $rootFolder.show
+      $head + $form + listnew(count, true) + $rootFolder.show(count)
     else
-      $head + $form + listnew + $rootFolder.show(count)
+      $head + $form + listnew + $rootFolder.show
     end
   end
 
