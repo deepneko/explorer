@@ -25,7 +25,11 @@ Explorer.allfile.each do |path|
   if i = allpath.index(path)
     if alldate[i] != date
       print "update:" + date + " " + path + "\n"
-      $con.execute("update filelist set date='#{date}' where path='#{path}'")
+      if path.index("'")
+        $con.execute("update filelist set date='#{date}' where path=\"#{path}\"")
+      else
+        $con.execute("update filelist set date='#{date}' where path='#{path}'")
+      end
     end
   else
     print "insert:" + date + " " + path + "\n"
