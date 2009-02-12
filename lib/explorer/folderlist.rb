@@ -7,7 +7,7 @@ module Explorer
       @root = Folder.new("./", 0)
     end
 
-    def open(path)
+    def open(path, count=nil)
       path = path.sub(@const.SEARCH_DIR, "./")
       if File.file?(path)
         dir = File.dirname(path) + "/"
