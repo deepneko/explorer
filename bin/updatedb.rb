@@ -14,7 +14,11 @@ alldate = $con.execute("select date from filelist").flatten
 allpath.each do |path|
   if !File.exists?(path)
     print "delete:" + path + "\n"
-    $con.execute("delete from filelist where path='#{path}'")
+      if path.index("'")
+        $con.execute("delete from filelist where path=\"#{path}\"")
+      else
+        $con.execute("delete from filelist where path='#{path}'")
+      end
   end
 end
 
@@ -25,12 +29,7 @@ Explorer.allfile.each do |path|
   if i = allpath.index(path)
     if alldate[i] != date
       print "update:" + date + " " + path + "\n"
-      if path.index("'")
-        p "update filelist set date='#{date}' where path=\"#{path}\""
-        $con.execute("update filelist set date='#{date}' where path=\"#{path}\"")
-      else
-        $con.execute("update filelist set date='#{date}' where path='#{path}'")
-      end
+      $con.execute("update filelist set date='#{date}' where path='#{path}'")
     end
   else
     print "insert:" + date + " " + path + "\n"
