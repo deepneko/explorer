@@ -64,14 +64,15 @@ module Explorer
       @folderList.clear
     end
     
-    def show(html)
+    def show(html, count=nil)
       @folderList.each_value do |folder|
         for i in 0..@deps
           html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         end
         html += "<img src=\"" + @const.DIR_ICON + "\" align=\"absmiddle\" border=0>"
-        html += "<b> <a href=\"" + @const.CGI_PATH + "?dir=" + folder.getAbsolutePath + "\">"
-        html += folder.getBasename + "</a></b><br>"
+        html += "<b> <a href=\"" + @const.CGI_PATH + "?dir=" + folder.getAbsolutePath
+        html += "&count=" + count if count
+        html += "\">" + folder.getBasename + "</a></b><br>"
         if folder.isOpen
           html = folder.show(html)
         end

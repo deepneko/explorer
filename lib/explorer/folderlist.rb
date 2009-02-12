@@ -7,7 +7,7 @@ module Explorer
       @root = Folder.new("./", 0)
     end
 
-    def open(path, count=nil)
+    def open(path)
       path = path.sub(@const.SEARCH_DIR, "./")
       if File.file?(path)
         dir = File.dirname(path) + "/"
@@ -18,10 +18,10 @@ module Explorer
       end
     end
     
-    def show
+    def show(count=nil)
       html = "<img src=\"" + @const.DIR_ICON + "\" align=\"absmiddle\" border=0>"
       html += "<b> " + @const.SEARCH_DIR + "</b><br>"
-      @root.show(html)
+      @root.show(html, count)
     end
 
     def allfile

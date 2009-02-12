@@ -63,7 +63,7 @@ FORM
   end
 
   def self.explorer(path, count=nil)
-    $rootFolder.open(path, count)
+    $rootFolder.open(path)
     show(count)
   end
   
@@ -71,7 +71,7 @@ FORM
     if count
       $head + $form + listnew(count, true) + $rootFolder.show
     else
-      $head + $form + listnew + $rootFolder.show
+      $head + $form + listnew + $rootFolder.show(count)
     end
   end
 
