@@ -6,6 +6,7 @@ require 'explorer'
 cgi = CGI.new('html4')
 keyword = cgi.params['keyword'][0]
 dir = cgi.params['dir'][0]
+count = cgi.params['count'][0]
 
 cgi.out(
         "type"	=> "text/html" ,
@@ -14,12 +15,22 @@ cgi.out(
   cgi.html do
     cgi.head{ cgi.title{'File Search'} } +
       cgi.body do
-      if keyword
-        Explorer.search(keyword)
-      elsif dir
-        Explorer.explorer(dir)
+      if count
+        if keyword
+          Explorer.search(keyword, count)
+        elsif dir
+          Explorer.explorer(dir, count)
+        else
+          Explorer.show(count)
+        end
       else
-        Explorer.show
+        if keyword
+          Explorer.search(keyword)
+        elsif dir
+          Explorer.explorer(dir)
+        else
+          Explorer.show
+        end
       end
     end
   end

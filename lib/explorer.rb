@@ -46,7 +46,8 @@ FORM
     "<b>Recent Update</b>" + result + "<hr>"
   end
 
-  def self.search(keyword)
+  def self.search(keyword, count=nil)
+    $const.LISTNEW_SIZE = count if count
     st = SearchThread.new($const.SEARCH_DIR, keyword, nil)
     st.start
     searchResult = st.getSearchResult
@@ -59,12 +60,14 @@ FORM
     $head + $form + result
   end
 
-  def self.explorer(path)
+  def self.explorer(path, count=nil)
+    $const.LISTNEW_SIZE = count if count
     $rootFolder.open(path)
     show
   end
   
-  def self.show
+  def self.show(count=nil)
+    $const.LISTNEW_SIZE = count if count
     $head + $form + listnew + $rootFolder.show
   end
 
