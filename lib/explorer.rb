@@ -63,8 +63,13 @@ FORM
   end
 
   def self.explorer(path, count=nil)
+    $const.LISTNEW_SIZE = count if count
     $rootFolder.open(path)
-    show(count)
+    if count
+      show(count)
+    else
+      show
+    end
   end
   
   def self.show(count=nil)
