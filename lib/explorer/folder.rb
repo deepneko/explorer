@@ -74,7 +74,7 @@ module Explorer
         html += "&count=" + count if count
         html += "\">" + folder.getBasename + "</a></b><br>"
         if folder.isOpen
-          html = folder.show(html)
+          html = folder.show(html, count)
         end
       end
       
