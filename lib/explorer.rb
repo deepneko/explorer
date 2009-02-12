@@ -54,8 +54,9 @@ FORM
     
     result = ""
     for i in searchResult
-      result += "<b> <a href=\"" + $const.CGI_PATH + "?dir=" + i + "\">"
-      result += i + "</a></b><br>"
+      result += "<b> <a href=\"" + $const.CGI_PATH + "?dir=" + i
+      result += "&count=" + count if count
+      result += "\">" + i + "</a></b><br>"
     end
     $head + $form + result
   end
@@ -68,7 +69,7 @@ FORM
   
   def self.show(count=nil)
     $const.LISTNEW_SIZE = count if count
-    $head + $form + listnew + $rootFolder.show
+    $head + $form + listnew(count) + $rootFolder.show
   end
 
   def self.allfile
