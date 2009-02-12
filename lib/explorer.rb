@@ -69,7 +69,11 @@ FORM
   
   def self.show(count=nil)
     $const.LISTNEW_SIZE = count if count
-    $head + $form + listnew(count) + $rootFolder.show
+    if count
+      $head + $form + listnew(count) + $rootFolder.show
+    else
+      $head + $form + listnew + $rootFolder.show
+    end
   end
 
   def self.allfile
