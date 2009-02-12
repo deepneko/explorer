@@ -45,8 +45,8 @@ FORM
       result += "\">" + file + "</a></b><br>"
     end
     html = "<b>Recent Update</b> "
-    html += "<a href=\"./explorer.cgi?count=50\">" + 50 + "</a> "
-    html += "<a href=\"./explorer.cgi?count=50\">" + 100 + "</a>"
+    html += "<a href=\"./explorer.cgi?count=50\">50</a> "
+    html += "<a href=\"./explorer.cgi?count=50\">100</a>"
     html += result + "<hr>"
     html
   end
