@@ -60,7 +60,7 @@ FORM
     result = ""
     for i in searchResult
       result += "<b> <a href=\"" + $const.CGI_PATH + "?dir=" + i
-      result += "&count=" + count
+      result += "&count=" + count.to_s
       result += "\">" + i + "</a></b><br>"
     end
     $head + $form + result
