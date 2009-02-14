@@ -16,7 +16,7 @@ cgi.out(
     cgi.head{ cgi.title{'File Search'} } +
       cgi.body do
       if keyword
-        Explorer.search(keyword, count)
+        Explorer.search(keyword)
       elsif dir
         Explorer.explorer(dir, count)
       else
