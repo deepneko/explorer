@@ -52,7 +52,7 @@ FORM
     html
   end
 
-  def self.search(keyword, count=nil)
+  def self.search(keyword)
     st = SearchThread.new($const.SEARCH_DIR, keyword, nil)
     st.start
     searchResult = st.getSearchResult
@@ -60,7 +60,6 @@ FORM
     result = ""
     for i in searchResult
       result += "<b> <a href=\"" + $const.CGI_PATH + "?dir=" + i
-      result += "&count=" + count.to_s
       result += "\">" + i + "</a></b><br>"
     end
     $head + $form + result
