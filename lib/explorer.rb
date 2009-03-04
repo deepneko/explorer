@@ -84,7 +84,7 @@ FORM
 
   def self.createtable
     begin
-      $con.execute('create table filelist(path, date)')
+      $con.execute('create table filelist(path, date, flv)')
     rescue SQLite3::SQLException
       p "tables already exist"
     end
