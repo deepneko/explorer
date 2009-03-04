@@ -24,7 +24,7 @@ movie_option = " and (path like '%.avi' or path like '%.wmv' or path like '%.mpg
 if getopt[:a]
   encodelist = $con.execute("select path from filelist where flv=''" + movie_option).flatten
 elsif getopt[:d]
-  encodelist = $con.execute("select path from filelist where path like '%#{getopt[:d]}%'" + movie_option).flatten
+  encodelist = $con.execute("select path from filelist where path like '#{getopt[:d]}%'" + movie_option).flatten
 elsif getopt[:f]
   encodelist = $con.execute("select path from filelist where path like '%#{getopt[:f]}'" + movie_option).flatten
 end
