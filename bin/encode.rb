@@ -9,7 +9,7 @@ begin
   OptionParser.new do |opt|
     opt.on('-a') {|v| getopt[:a] = v }
     opt.on('-d VALUE') {|v| getopt[:d] = v }
-    opt.on('-d VALUE') {|v| getopt[:f] = v }
+    opt.on('-f VALUE') {|v| getopt[:f] = v }
     opt.parse!(ARGV)
   end
 rescue
