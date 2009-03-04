@@ -18,7 +18,7 @@ rescue
 end
 
 # movie only
-movie_option = " and (filelist.path like '%.avi' or filelist.path like '%.wmv' or filelist.path like '%.mpg')"
+movie_option = " and (path like '%.avi' or path like '%.wmv' or path like '%.mpg')"
 
 # select alldata from table
 if getopt[:a]
