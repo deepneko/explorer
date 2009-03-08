@@ -19,6 +19,7 @@ module Explorer
       @SEARCH_DIR = '/home/deepneko/tmp/'
       @DB = '/home/deepneko/allfile.db'
       @LISTNEW_SIZE = 10
+      @SSH_PORT = 20022
     end
   end
 end

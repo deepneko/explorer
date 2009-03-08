@@ -32,11 +32,15 @@ end
 p getopt
 p encodelist
 
-# remote
-#encodelist.each do |path|
-#  begin
-#    $con.execute("update filelist set date='#{date}' where path=\"#{path}\"")
-#  rescue SQLite3::SQLException
-#    print "Exception:" + date + " " + path + "\n"
-#  end
-#end
+# scp avi,wmv,mpg local2remote
+# ffmpeg encode at remote host
+# scp flv remote2local
+encodelist.each do |path|
+  `scp -P #{$const.SSH_PORT} path tomoyo@deepneko.dyndns.org:~/ffmpeg/#{File.basename(path)}`
+
+  #begin
+  #  $con.execute("update filelist set flv='#{}' where path=\"#{path}\"")
+  #rescue SQLite3::SQLException
+  #  print "Exception:" + date + " " + path + "\n"
+  #end
+end
