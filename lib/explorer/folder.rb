@@ -43,7 +43,6 @@ module Explorer
     
     def open(targetPath, file=nil)
       @focusfile = file
-
       if !@open
         for dir in @dirList
           @folderList[dir] = Folder.new(@path + dir + "/", @deps+1)
@@ -79,10 +78,14 @@ module Explorer
           html = folder.show(html, count)
         end
       end
-      
+
       for file in @fileList
+        flv = $con.execute("select flv from filelist where path='#{file}'").flatten
         for i in 0..@deps
           html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+        end
+        if flv.size > 0
+          html += "watch "
         end
         html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
         if file == @focusfile
