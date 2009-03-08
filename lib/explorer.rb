@@ -32,6 +32,8 @@ Keyword: <input type="text" name="keyword"><br>
 <input type="submit" value="Search">
 </form>
 <hr>
+<font size=10>true tears視聴できます(試験運用中)</font>
+<hr>
 FORM
 
   def self.listnew(n=$const.LISTNEW_SIZE)
