@@ -37,6 +37,8 @@ end
 # scp flv remote2local
 encodelist.each do |path|
   path.gsub!(/ /, "\\ ")
+  p path
+  exit
   file = File.basename(path)
   p "Filename:" + file
   command = "scp -P #{$const.SSH_PORT} #{path} tomoyo@deepneko.dyndns.org:~/ffmpeg/#{file}"
