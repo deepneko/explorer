@@ -89,7 +89,7 @@ module Explorer
         #####################################
         fullpath = @absolutePath + file
         flv = $con.execute("select flv from filelist where path=\"#{fullpath}\"").flatten
-        html += fullpath
+        html += "watch " * flv.size
 
         html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
         if file == @focusfile
