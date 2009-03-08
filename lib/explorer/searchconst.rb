@@ -9,6 +9,7 @@ module Explorer
     attr_accessor :DB
     attr_accessor :LISTNEW_SIZE
     attr_accessor :ENCODE_SERVER
+    attr_accessor :FLV_DIRECTORY
     attr_accessor :SSH_PORT
     
     def initialize
@@ -24,6 +25,7 @@ module Explorer
 
       # encode configuration
       @ENCODE_SERVER = "tomoyo@deepneko.dyndns.org"
+      @FLV_DIRECTORY = "/usr/local/www/apache22/data/flv/"
       @SSH_PORT = 20022
     end
   end
