@@ -8,6 +8,7 @@ module Explorer
     attr_accessor :FILE_ICON
     attr_accessor :DB
     attr_accessor :LISTNEW_SIZE
+    attr_accessor :SSH_PORT
     
     def initialize
       @CGI_PATH = './explorer.cgi'
