@@ -47,7 +47,7 @@ encodelist.each do |path|
   #scp_up = "scp -P #{$const.SSH_PORT} \"#{path}\" #{$const.ENCODE_SERVER}"
   encode = "ssh -p #{$const.SSH_PORT} " + encode(src, dist)
   scp_down = "scp -P #{$const.SSH_PORT} #{$const.ENCODE_SERVER}dist dist"
-  `#{scp_up}`
+  #`#{scp_up}`
   `#{encode}`
   `#{scp_down}`
   exit
