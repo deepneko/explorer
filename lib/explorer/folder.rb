@@ -87,7 +87,7 @@ module Explorer
         #####################################
         # ToDo: this code can be bottleneck #
         #####################################
-        fullpath = @path + "/" + file
+        fullpath = @path + "//" + file
         flv = $con.execute("select flv from filelist where path='#{fullpath}'").flatten
         html += "watch " * flv.size
 
