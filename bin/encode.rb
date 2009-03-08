@@ -36,7 +36,7 @@ end
 # ffmpeg encode at remote host
 # scp flv remote2local
 encodelist.each do |path|
-  path.gsub!(/ /, "\\ ")
+  path.gsub!(/ /, "\ ")
   p path
   exit
   file = File.basename(path)
