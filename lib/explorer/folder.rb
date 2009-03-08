@@ -80,13 +80,18 @@ module Explorer
       end
 
       for file in @fileList
-        flv = $con.execute("select flv from filelist where path='#{file}'").flatten
         for i in 0..@deps
           html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         end
+
+        #####################################
+        # ToDo: this code can be bottleneck #
+        #####################################
+        flv = $con.execute("select flv from filelist where path='#{file}'").flatten
         if flv.size > 0
           html += "watch "
         end
+
         html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
         if file == @focusfile
           html += " <font color=red>" + file + "</font><br>"
