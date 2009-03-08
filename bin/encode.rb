@@ -55,9 +55,9 @@ encodelist.each do |path|
 
   begin
     $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
-  rescue SQLite3::SQLException
-    p "update filelist set flv='#{dist}' where path=\"#{path}\""
-    p "Exception:" + dist + " " + path + "\n"
+  #rescue SQLite3::SQLException
+  #  p "update filelist set flv='#{dist}' where path=\"#{path}\""
+  #  p "Exception:" + dist + " " + path + "\n"
   end
 end
 
