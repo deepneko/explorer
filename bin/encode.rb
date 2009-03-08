@@ -39,6 +39,7 @@ encodelist.each do |path|
   p "Filename:" + File.basename(path)
   command = "scp -P #{$const.SSH_PORT} \"path\" \"tomoyo@deepneko.dyndns.org:~/ffmpeg/#{File.basename(path)}\""
   p command
+  `#{command}`
   exit
 
   #begin
