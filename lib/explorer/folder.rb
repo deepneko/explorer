@@ -88,7 +88,7 @@ module Explorer
         # ToDo: this code can be bottleneck #
         #####################################
         fullpath = @path + "/" + file
-        flv = $con.execute("select flv from filelist where path=\"#{fullpath}\"").flatten
+        flv = $con.execute("select flv from filelist where path like \"%#{file}\"").flatten
         html += flv.size.to_s
 
         html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
