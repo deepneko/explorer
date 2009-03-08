@@ -23,7 +23,7 @@ module Explorer
       @LISTNEW_SIZE = 10
 
       # encode configuration
-      @ENCODE_SERVER = "tomoyo@deepneko.dyndns.org:~/"
+      @ENCODE_SERVER = "tomoyo@deepneko.dyndns.org"
       @SSH_PORT = 20022
     end
   end
