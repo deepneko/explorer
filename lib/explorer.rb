@@ -32,7 +32,7 @@ Keyword: <input type="text" name="keyword"><br>
 <input type="submit" value="Search">
 </form>
 <hr>
-<font size=10>true tears視聴できます(試験運用中)</font>
+<a href=\"./explorer.cgi?dir=/usr/home/BACKUP/kotachu/Movie/[ Anime ]/true tears/&count=20\"><font size=10>true tears</font></a>
 <hr>
 FORM
 
