@@ -29,14 +29,16 @@ elsif getopt[:f]
   encodelist = $con.execute("select path from filelist where path like '%#{getopt[:f]}'" + movie_option).flatten
 end
 
-p getopt
-p encodelist
+#p getopt
+#p encodelist
 
 # scp avi,wmv,mpg local2remote
 # ffmpeg encode at remote host
 # scp flv remote2local
 encodelist.each do |path|
-  `scp -P #{$const.SSH_PORT} "path" "tomoyo@deepneko.dyndns.org:~/ffmpeg/#{File.basename(path)}"`
+  p "Filename:" + File.basename(path)
+  command = "scp -P #{$const.SSH_PORT} \"path\" \"tomoyo@deepneko.dyndns.org:~/ffmpeg/#{File.basename(path)}\""
+  p command
   exit
 
   #begin
