@@ -66,7 +66,8 @@ module Explorer
     end
     
     def show(html, count=nil)
-      @folderList.each_value do |folder|
+      folderArray = @folderList.sort
+      folderArray.each_value do |folder|
         for i in 0..@deps
           html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         end

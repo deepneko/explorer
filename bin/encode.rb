@@ -23,7 +23,7 @@ rescue
 end
 
 # movie only
-movie_option = " and (path like '%.avi' or path like '%.wmv' or path like '%.mpg')"
+movie_option = " and (path like '%.avi' or path like '%.wmv')"
 
 # select alldata from table
 if getopt[:a]
@@ -56,7 +56,6 @@ encodelist.each do |path|
   begin
     $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
   rescue SQLite3::SQLException
-    `#{rm}`
     print "Exception:" + dist + " " + path + "\n"
   end
 end
