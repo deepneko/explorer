@@ -3,6 +3,7 @@
 $LOAD_PATH.unshift File.expand_path("../lib", File.dirname(__FILE__))
 require 'explorer'
 require 'optparse'
+require 'digest/md5'
 
 getopt = Hash.new
 begin
@@ -29,6 +30,7 @@ elsif getopt[:f]
   encodelist = $con.execute("select path from filelist where path like '%#{getopt[:f]}'" + movie_option).flatten
 end
 
+# debug
 #p getopt
 #p encodelist
 
@@ -36,11 +38,14 @@ end
 # ffmpeg encode at remote host
 # scp flv remote2local
 encodelist.each do |path|
-  file = File.basename(path)
-  p "Filename:" + file
-  command = "scp -P #{$const.SSH_PORT} \"#{path}\" tomoyo@deepneko.dyndns.org:~/ffmpeg/"
-  p command
-  `#{command}`
+  src = File.basename(path)
+  dist = src + ".flv"
+  scp_up = "scp -P #{$const.SSH_PORT} \"#{path}\" tomoyo@deepneko.dyndns.org:~/"
+  encode = "ssh -p #{$const.SSH_PORT} " + encode(src, dist)
+  scp_down = "scp -P #{$const.SSH_PORT} tomoyo@deepneko.dyndns.org:~/dist dist"
+  `#{scp_up}`
+  `#{encode}`
+  `#{scp_down}`
   exit
 
   #begin
@@ -48,4 +53,8 @@ encodelist.each do |path|
   #rescue SQLite3::SQLException
   #  print "Exception:" + date + " " + path + "\n"
   #end
+end
+
+def encode(src, dist, size="640x480", sampling=22050, bitrate="800k")
+  "ffmpeg -i #{src} -vcodec flv -s #{size} -ar #{sampling} -b #{bitrate} #{dist}"
 end

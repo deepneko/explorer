@@ -8,6 +8,7 @@ module Explorer
     attr_accessor :FILE_ICON
     attr_accessor :DB
     attr_accessor :LISTNEW_SIZE
+    attr_accessor :ENCODE_SERVER
     attr_accessor :SSH_PORT
     
     def initialize
@@ -16,10 +17,13 @@ module Explorer
       @DIR_ICON = @ICON_PATH + 'dir.gif'
       @FILE_ICON = @ICON_PATH + 'text.gif'
 
-      # need configuration
+      # need basic configuration
       @SEARCH_DIR = '/home/deepneko/tmp/'
       @DB = '/home/deepneko/allfile.db'
       @LISTNEW_SIZE = 10
+
+      # encode configuration
+      @ENCODE_SERVER = "tomoyo@deepneko.dyndns.org:~/ffmpeg/"
       @SSH_PORT = 20022
     end
   end
