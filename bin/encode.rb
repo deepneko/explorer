@@ -48,14 +48,15 @@ encodelist.each do |path|
   rm = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} 'rm -f \"#{src}\";rm -f #{dist}'"
 
   # exec command
-  `#{scp_up}`
-  `#{encode}`
-  `#{scp_down}`
-  `#{rm}`
+  #`#{scp_up}`
+  #`#{encode}`
+  #`#{scp_down}`
+  #`#{rm}`
 
   begin
     $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
   rescue SQLite3::SQLException
+    print "update filelist set flv='#{dist}' where path=\"#{path}\""
     print "Exception:" + dist + " " + path + "\n"
   end
 end
