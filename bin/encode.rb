@@ -34,27 +34,30 @@ elsif getopt[:f]
   encodelist = $con.execute("select path from filelist where path like '%#{getopt[:f]}'" + movie_option).flatten
 end
 
-# debug
-#p getopt
-#p encodelist
-
 # scp avi,wmv,mpg local2remote
 # ffmpeg encode at remote host
 # scp flv remote2local
 encodelist.each do |path|
   src = File.basename(path)
   dist = Digest::MD5.new.update(src).to_s + ".flv"
+
+  # command
   scp_up = "scp -P #{$const.SSH_PORT} \"#{path}\" #{$const.ENCODE_SERVER}:~/"
   encode = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} '" + encode(src, dist) + "'"
   scp_down = "scp -P #{$const.SSH_PORT} #{$const.ENCODE_SERVER}:~/#{dist} #{$const.FLV_DIRECTORY}"
+  rm = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} 'rm -f \"#{src}\";rm -f #{dist}'"
+
+  # exec command
   `#{scp_up}`
   `#{encode}`
   `#{scp_down}`
+  `#{rm}`
 
-  #begin
-  #  $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
-  #rescue SQLite3::SQLException
-  #  print "Exception:" + dist + " " + path + "\n"
-  #end
+  begin
+    $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
+  rescue SQLite3::SQLException
+    `#{rm}`
+    print "Exception:" + dist + " " + path + "\n"
+  end
 end
 
