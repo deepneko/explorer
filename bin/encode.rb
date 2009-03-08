@@ -37,6 +37,7 @@ p encodelist
 # scp flv remote2local
 encodelist.each do |path|
   `scp -P #{$const.SSH_PORT} path tomoyo@deepneko.dyndns.org:~/ffmpeg/#{File.basename(path)}`
+  exit
 
   #begin
   #  $con.execute("update filelist set flv='#{}' where path=\"#{path}\"")
