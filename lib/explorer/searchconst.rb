@@ -6,6 +6,7 @@ module Explorer
     attr_accessor :ICON_PATH
     attr_accessor :DIR_ICON
     attr_accessor :FILE_ICON
+    attr_accessor :PLAY_ICON
     attr_accessor :DB
     attr_accessor :LISTNEW_SIZE
     attr_accessor :ENCODE_SERVER
@@ -17,6 +18,7 @@ module Explorer
       @ICON_PATH = '../img/'
       @DIR_ICON = @ICON_PATH + 'dir.gif'
       @FILE_ICON = @ICON_PATH + 'text.gif'
+      @PLAY_ICON = @ICON_PATH + 'play.gif'
 
       # need basic configuration
       @SEARCH_DIR = '/home/deepneko/tmp/'
