@@ -6,7 +6,7 @@ require 'optparse'
 require 'digest/md5'
 
 def encode(src, dist, size="640x480", sampling=22050, bitrate="800k")
-  "ffmpeg -i \"#{src}\" -vcodec flv -s #{size} -ar #{sampling} -b #{bitrate} #{dist}"
+  "ffmpeg -i \"#{src}\" -vcodec flv -s #{size} -ar #{sampling} -b #{bitrate} -y #{dist}"
 end
 
 getopt = Hash.new
@@ -48,16 +48,15 @@ encodelist.each do |path|
   rm = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} 'rm -f \"#{src}\";rm -f #{dist}'"
 
   # exec command
-  #`#{scp_up}`
-  #`#{encode}`
-  #`#{scp_down}`
-  #`#{rm}`
+  `#{scp_up}`
+  `#{encode}`
+  `#{scp_down}`
+  `#{rm}`
 
   begin
-    $con.execute("update filelist set flv='#{dist}' where path='#{path}'")
+    $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
   rescue SQLite3::SQLException
-    p "update filelist set flv='#{dist}' where path=\"#{path}\""
-    p "Exception:" + dist + " " + path + "\n"
+    p "Exception:" + dist + ":" + path + "\n"
   end
 end
 
