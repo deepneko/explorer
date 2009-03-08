@@ -44,7 +44,7 @@ end
 encodelist.each do |path|
   src = File.basename(path)
   dist = src + ".flv"
-  scp_up = "scp -P #{$const.SSH_PORT} \"#{path}\" #{$const.ENCODE_SERVER}"
+  #scp_up = "scp -P #{$const.SSH_PORT} \"#{path}\" #{$const.ENCODE_SERVER}"
   encode = "ssh -p #{$const.SSH_PORT} " + encode(src, dist)
   scp_down = "scp -P #{$const.SSH_PORT} #{$const.ENCODE_SERVER}dist dist"
   `#{scp_up}`
