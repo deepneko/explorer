@@ -19,7 +19,7 @@ $html1 = <<"HTML1"
 		<param name="allowScriptAccess" value="sameDomain" />
 HTML1
 
-$html2 =  "<param name=\"FlashVars\" value=\"src=#{source}\"/><embed src=\"../swf/FlvPlayer.swf\" FlashVars=\"src=#{source}\""
+$html2 =  "<param name=\"FlashVars\" value=\"src=#{source}\"/><embed src=\"/home/deepneko/swf/FlvPlayer.swf\" FlashVars=\"src=#{source}\""
 
 $html3 = <<"HTML2"
 			quality="high" bgcolor="#869ca7"
