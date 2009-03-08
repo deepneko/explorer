@@ -6,7 +6,7 @@ require 'optparse'
 require 'digest/md5'
 
 def encode(src, dist, size="640x480", sampling=22050, bitrate="800k")
-  "ffmpeg -i #{src} -vcodec flv -s #{size} -ar #{sampling} -b #{bitrate} #{dist}"
+  "ffmpeg -i \"#{src}\" -vcodec flv -s #{size} -ar #{sampling} -b #{bitrate} #{dist}"
 end
 
 getopt = Hash.new
