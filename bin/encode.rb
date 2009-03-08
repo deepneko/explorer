@@ -45,16 +45,17 @@ encodelist.each do |path|
   src = File.basename(path)
   dist = Digest::MD5.new.update(src).to_s + ".flv"
   scp_up = "scp -P #{$const.SSH_PORT} \"#{path}\" #{$const.ENCODE_SERVER}"
+  p scp_up
   encode = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} '" + encode(src, dist) + "'"
   scp_down = "scp -P #{$const.SSH_PORT} #{$const.ENCODE_SERVER}:~/#{dist} #{$const.FLV_DIRECTORY}"
   `#{scp_up}`
   `#{encode}`
   `#{scp_down}`
 
-  begin
-    $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
-  rescue SQLite3::SQLException
-    print "Exception:" + dist + " " + path + "\n"
-  end
+  #begin
+  #  $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
+  #rescue SQLite3::SQLException
+  #  print "Exception:" + dist + " " + path + "\n"
+  #end
 end
 
