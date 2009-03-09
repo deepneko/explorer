@@ -29,14 +29,14 @@ movie_option = " and (path like '%.avi' or path like '%.wmv')"
 if getopt[:a]
   encodelist = $con.execute("select path from filelist where flv=''" + movie_option).flatten
 elsif getopt[:d]
-  encodelist = $con.execute("select path from filelist where path like '#{getopt[:d]}%'" + movie_option).flatten
+  encodelist = $con.execute("select path from filelist where path like '#{getopt[:d]}%' and flv=''" + movie_option).flatten
 elsif getopt[:f]
   encodelist = $con.execute("select path from filelist where path like '%#{getopt[:f]}'" + movie_option).flatten
 end
 
-# scp avi,wmv,mpg local2remote
-# ffmpeg encode at remote host
-# scp flv remote2local
+# 1. scp avi,wmv,mpg local2remote
+# 2. ffmpeg encode at remote host
+# 3. scp flv remote2local
 encodelist.each do |path|
   src = File.basename(path)
   dist = Digest::MD5.new.update(src).to_s + ".flv"
