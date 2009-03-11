@@ -27,17 +27,11 @@ movie_option = " and (path like '%.avi' or path like '%.wmv')"
 
 # select alldata from table
 if getopt[:a]
-  encodelist = $con.execute("select path, flv from filelist where flv=''" + movie_option).flatten
+  encodelist = $con.execute("select path, flv from filelist where flv=''" + movie_option)
 elsif getopt[:d]
-  encodelist = $con.execute("select path, flv from filelist where path like '#{getopt[:d]}%'" + movie_option).flatten
+  encodelist = $con.execute("select path, flv from filelist where path like '#{getopt[:d]}%'" + movie_option)
 elsif getopt[:f]
-  encodelist = $con.execute("select path, flv from filelist where path like '%#{getopt[:f]}'" + movie_option).flatten
-end
-
-encodelist.each do |path, flv|
-  if flv
-    p path
-  end
+  encodelist = $con.execute("select path, flv from filelist where path like '%#{getopt[:f]}'" + movie_option)
 end
 
 # 1. scp avi,wmv,mpg local2remote
