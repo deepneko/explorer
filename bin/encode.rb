@@ -34,7 +34,11 @@ elsif getopt[:f]
   encodelist = $con.execute("select path, flv from filelist where path like '%#{getopt[:f]}'" + movie_option).flatten
 end
 
-p encodelist
+encodelist.each do |path, flv|
+  if flv
+    p path
+  end
+end
 
 # 1. scp avi,wmv,mpg local2remote
 # 2. ffmpeg encode at remote host
