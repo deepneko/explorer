@@ -41,16 +41,13 @@ encodelist.each do |path, flv|
   src = File.basename(path)
   dist = Digest::MD5.new.update(src).to_s + ".flv"
 
-  p path
-  p flv
-  p dist
-
   if flv != dist
     # command
     scp_up = "scp -P #{$const.SSH_PORT} \"#{path}\" #{$const.ENCODE_SERVER}:~/"
     encode = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} '" + encode(src, dist) + "'"
     scp_down = "scp -P #{$const.SSH_PORT} #{$const.ENCODE_SERVER}:~/#{dist} #{$const.FLV_DIRECTORY}"
-    rm = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} 'rm -f \"#{src}\";rm -f #{dist}'"
+    rm = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} 'rm -f *.avi;rm -f *.flv;rm -f *.wmv'"
+    #rm = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} 'rm -f \"#{src}\";rm -f #{dist}'"
 
     # exec command
     `#{scp_up}`
