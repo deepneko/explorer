@@ -81,7 +81,7 @@ encodelist.each do |path, flv|
   dist = Digest::MD5.new.update(src).to_s + ".flv"
   
   if flv != dist
-    lock_file = $$ + "_" + flv
+    lock_file = $$.to_s + "_" + flv
 
     if !File.exists?(lock_file)
       # generate lock file
