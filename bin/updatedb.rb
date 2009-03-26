@@ -40,7 +40,7 @@ end
 
 # update or insert
 Explorer.allfile.each do |path|
-  if path.index(exdir) = 0
+  if path.index(exdir) == 0
     p path + " not update"
     next
   end
