@@ -35,6 +35,7 @@ if getopt[:u]
       flv = $enconst.FLV_DIRECTORY + flv
       if File.exists?(flv) && File.stat(flv).size <= 1
         $con.execute("update filelist set flv='' where flv='#{flv}'")
+        `rm -f #{flv}`
       end
     end
   end
@@ -44,7 +45,6 @@ if getopt[:u]
     if flv.size == 0
       `rm -f #{file}`
     elsif File.stat(file).size <= 1
-      p file
       `rm -f #{file}`
     end
   end
