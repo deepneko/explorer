@@ -61,7 +61,7 @@ end
 
 if getopt[:d] == "1"
   encodelist = $con.execute("select path, flv from filelist where path like '#{$enconst.ENCODE_DIRECTORY}%'" + movie_option)
-if getopt[:d]
+elsif getopt[:d]
   encodelist = $con.execute("select path, flv from filelist where path like '#{getopt[:d]}%'" + movie_option)
 end
 
