@@ -4,7 +4,7 @@ module Encoder
     attr_accessor :FLV_DIRECTORY
     
     def initialize
-      @FLV_DIRECTORY = "/usr/local/www/apache22/data/flv/"
+      @FLV_DIRECTORY = "/usr/home/BACKUP/kotachu/flv/"
       @ENCODE_SERVER = "tomoyo@deepneko.dyndns.org"
       @ENCODE_PORT = 20022
     end
