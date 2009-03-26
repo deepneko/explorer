@@ -49,7 +49,7 @@ $enconst.ENCODE_SERVER.each do |host, port|
         #rm = "ssh -p #{port} #{host} 'rm -f *.avi;rm -f *.AVI;rm -f *.flv;rm -f *.wmv'"
 
         # exec command
-        #`#{scp_up}`
+        `#{scp_up}`
         #`#{encode}`
         #`#{scp_down}`
         #`#{rm}`
