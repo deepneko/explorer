@@ -85,6 +85,7 @@ encodelist.each do |path, flv|
 
     if !File.exists?(lock_file)
       # generate lock file
+      p lock_file
       `touch #{lock_file}`
 
       # 1. scp avi,wmv,mpg local2remote
