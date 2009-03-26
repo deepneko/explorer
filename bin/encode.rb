@@ -12,7 +12,7 @@ begin
   OptionParser.new do |opt|
     opt.on('-a') {|v| getopt[:a] = v }
     opt.on('-u') {|v| getopt[:u] = v }
-    opt.on('-d [VALUE]') {|v| getopt[:d] = v }
+    opt.on('-d VALUE') {|v| getopt[:d] = v }
     opt.on('-f VALUE') {|v| getopt[:f] = v }
     opt.on('-p VALUE') {|v| getopt[:p] = v }
     opt.on('-s VALUE') {|v| getopt[:s] = v }
@@ -59,9 +59,7 @@ elsif getopt[:f]
   encodelist = $con.execute("select path, flv from filelist where path like '%#{getopt[:f]}'" + movie_option)
 end
 
-p getopt[:d]
-exit! 0
-if getopt[:d] == true
+if getopt[:d] == 1
   encodelist = $con.execute("select path, flv from filelist where path like '#{$enconst.ENCODE_DIRECTORY}%'" + movie_option)
 elsif getopt[:d]
   encodelist = $con.execute("select path, flv from filelist where path like '#{getopt[:d]}%'" + movie_option)
