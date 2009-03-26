@@ -55,10 +55,16 @@ end
 # select alldata from table
 if getopt[:a]
   encodelist = $con.execute("select path, flv from filelist where flv=''" + movie_option)
-elsif getopt[:d]
-  encodelist = $con.execute("select path, flv from filelist where path like '#{getopt[:d]}%'" + movie_option)
 elsif getopt[:f]
   encodelist = $con.execute("select path, flv from filelist where path like '%#{getopt[:f]}'" + movie_option)
+end
+
+p getopt[:d]
+exit! 0
+if getopt[:d] == true
+  encodelist = $con.execute("select path, flv from filelist where path like '#{$enconst.ENCODE_DIRECTORY}%'" + movie_option)
+elsif getopt[:d]
+  encodelist = $con.execute("select path, flv from filelist where path like '#{getopt[:d]}%'" + movie_option)
 end
 
 # host
@@ -93,22 +99,15 @@ encodelist.each do |path, flv|
       # 3. scp flv remote2local
       # 4. rm all tmp file
       scp_up = "scp -P #{port} \"#{path}\" #{host}:~/"
-      p scp_up
       encode = "ssh -p #{port} #{host} '" + Encoder::ffmpeg(src, dist) + "'"
-      p encode
       scp_down = "scp -P #{port} #{host}:~/#{dist} #{$enconst.FLV_DIRECTORY}"
       rm = "ssh -p #{port} #{host} 'rm -f *.avi;rm -f *.AVI;rm -f *.flv;rm -f *.wmv'"
       
       # exec command
-      p "a"
       `#{scp_up}`
-      p "b"
       `#{encode}`
-      p "c"
       `#{scp_down}`
-      p "d"
       `#{rm}`
-      p "e"
 
       if File.exists?($enconst.FLV_DIRECTORY + dist)
         if File.stat($enconst.FLV_DIRECTORY + dist).size > 0
