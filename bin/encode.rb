@@ -81,7 +81,7 @@ encodelist.each do |path, flv|
   dist = Digest::MD5.new.update(src).to_s + ".flv"
   
   if flv != dist
-    lock_file = $$.to_s + "_" + flv
+    lock_file = $$.to_s + "_" + dist
 
     if !File.exists?(lock_file)
       # generate lock file
@@ -103,7 +103,7 @@ encodelist.each do |path, flv|
       `#{scp_down}`
       `#{rm}`
 
-      if File.stat($enconst.FLV_DIRECTORY + flv).size > 0
+      if File.stat($enconst.FLV_DIRECTORY + dist).size > 0
         begin
           $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
         rescue SQLite3::SQLException
