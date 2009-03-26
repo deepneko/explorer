@@ -41,6 +41,7 @@ end
 # update or insert
 Explorer.allfile.each do |path|
   if File.extname(path) == ".flv"
+    p path
     next
   end
 
