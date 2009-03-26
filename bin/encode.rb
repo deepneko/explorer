@@ -27,9 +27,10 @@ movie_option = " and (path like '%.avi' or path like '%.wmv')"
 if getopt[:u]
   encodelist = $con.execute("select path, flv from filelist")
   encodelist.each do |path, flv|
+    p flv
     if flv
       if File.exists?(flv) && File.stat($enconst.FLV_DIRECTORY + flv).size <= 0
-        p flv
+        p "  " + flv
         #$con.execute("update filelist set flv='' where flv='#{flv}'")
       else
         #$con.execute("update filelist set flv='' where flv='#{flv}'")
@@ -40,10 +41,10 @@ if getopt[:u]
   Dir.glob($enconst.FLV_DIRECTORY + "*.flv").each do |file|
     flv = $con.execute("select path, flv from filelist where flv='#{File.basename(file)}'").flatten
     if flv.size == 0
-      p flv
+      #`rm -f #{file}`
     end
   end
-
+  
   exit! 0
 end
 
