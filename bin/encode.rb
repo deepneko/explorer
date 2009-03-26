@@ -93,7 +93,9 @@ encodelist.each do |path, flv|
       # 3. scp flv remote2local
       # 4. rm all tmp file
       scp_up = "scp -P #{port} \"#{path}\" #{host}:~/"
+      p scp_up
       encode = "ssh -p #{port} #{host} '" + Encoder::ffmpeg(src, dist) + "'"
+      p encode
       scp_down = "scp -P #{port} #{host}:~/#{dist} #{$enconst.FLV_DIRECTORY}"
       rm = "ssh -p #{port} #{host} 'rm -f *.avi;rm -f *.AVI;rm -f *.flv;rm -f *.wmv'"
       
