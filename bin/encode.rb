@@ -33,7 +33,7 @@ if getopt[:u]
   encodelist.each do |path, flv|
     if flv
       flv = $enconst.FLV_DIRECTORY + flv
-      if File.exists?(flv) && File.stat(flv).size <= 0
+      if File.exists?(flv) && File.stat(flv).size <= 1
         $con.execute("update filelist set flv='' where flv='#{flv}'")
       end
     end
@@ -42,6 +42,9 @@ if getopt[:u]
   Dir.glob($enconst.FLV_DIRECTORY + "*.flv").each do |file|
     flv = $con.execute("select path, flv from filelist where flv='#{File.basename(file)}'").flatten
     if flv.size == 0
+      `rm -f #{file}`
+    elsif File.stat(file).size <= 1
+      p file
       `rm -f #{file}`
     end
   end
