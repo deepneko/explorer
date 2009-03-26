@@ -65,14 +65,14 @@ end
 if getopt[:s]
   host = getopt[:s]
 else
-  host = $enconst.ENCODER_SERVER
+  host = $enconst.ENCODE_SERVER
 end
 
 # port
 if getopt[:p]
   port = getopt[:p]
 else
-  port = $enconst.ENCODER_PORT
+  port = $enconst.ENCODE_PORT
 end
 
 # main loop
