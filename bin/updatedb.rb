@@ -2,6 +2,22 @@
 
 $LOAD_PATH.unshift File.expand_path("../lib", File.dirname(__FILE__))
 require 'explorer'
+require 'optparse'
+
+# command option
+getopt = Hash.new
+begin
+  OptionParser.new do |opt|
+    opt.on('-e VALUE') {|v| getopt[:e] = v }
+    opt.parse!(ARGV)
+  end
+rescue
+  p "usage: ./encode.rb [-e directory]"
+  exit! 0
+end
+
+# this directory's file is not update
+exdir = getopt[:e]
 
 # if table doesn't exist, create table;
 Explorer.createtable
@@ -24,6 +40,11 @@ end
 
 # update or insert
 Explorer.allfile.each do |path|
+  if path.index(exdir) = 0
+    p path + " not update"
+    next
+  end
+
   date = File.mtime(path).strftime('%Y-%m-%d %H:%M:%S')
   print date + " " + path + "\n"
   if i = allpath.index(path)

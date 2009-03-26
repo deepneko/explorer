@@ -2,16 +2,12 @@ module Explorer
   class SearchConst
     attr_accessor :SEARCH_DIR
     attr_accessor :CGI_PATH
-    attr_accessor :DIR_PATH
     attr_accessor :ICON_PATH
     attr_accessor :DIR_ICON
     attr_accessor :FILE_ICON
     attr_accessor :PLAY_ICON
     attr_accessor :DB
     attr_accessor :LISTNEW_SIZE
-    attr_accessor :ENCODE_SERVER
-    attr_accessor :FLV_DIRECTORY
-    attr_accessor :SSH_PORT
     
     def initialize
       @CGI_PATH = './explorer.cgi'
@@ -24,11 +20,6 @@ module Explorer
       @SEARCH_DIR = '/home/deepneko/tmp/'
       @DB = '/home/deepneko/allfile.db'
       @LISTNEW_SIZE = 10
-
-      # encode configuration
-      @ENCODE_SERVER = "tomoyo@deepneko.dyndns.org"
-      @FLV_DIRECTORY = "/usr/local/www/apache22/data/flv/"
-      @SSH_PORT = 20022
     end
   end
 end
