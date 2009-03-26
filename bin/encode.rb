@@ -23,17 +23,15 @@ end
 # movie only
 movie_option = " and (path like '%.avi' or path like '%.wmv')"
 
-# if flv size = 0 then flv data delete from db
+# if flv file size = 0 then delete flv file from db
+# if flv file exists but doesn't exist from database, delete flv file
 if getopt[:u]
   encodelist = $con.execute("select path, flv from filelist")
   encodelist.each do |path, flv|
     if flv
       flv = $enconst.FLV_DIRECTORY + flv
       if File.exists?(flv) && File.stat(flv).size <= 0
-        p flv
-        #$con.execute("update filelist set flv='' where flv='#{flv}'")
-      else
-        #$con.execute("update filelist set flv='' where flv='#{flv}'")
+        $con.execute("update filelist set flv='' where flv='#{flv}'")
       end
     end
   end
@@ -41,7 +39,7 @@ if getopt[:u]
   Dir.glob($enconst.FLV_DIRECTORY + "*.flv").each do |file|
     flv = $con.execute("select path, flv from filelist where flv='#{File.basename(file)}'").flatten
     if flv.size == 0
-      #`rm -f #{file}`
+      `rm -f #{file}`
     end
   end
   
