@@ -100,10 +100,15 @@ encodelist.each do |path, flv|
       rm = "ssh -p #{port} #{host} 'rm -f *.avi;rm -f *.AVI;rm -f *.flv;rm -f *.wmv'"
       
       # exec command
+      p "a"
       `#{scp_up}`
+      p "b"
       `#{encode}`
+      p "c"
       `#{scp_down}`
+      p "d"
       `#{rm}`
+      p "e"
 
       if File.stat($enconst.FLV_DIRECTORY + dist).size > 0
         begin
