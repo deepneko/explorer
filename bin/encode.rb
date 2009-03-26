@@ -6,6 +6,7 @@ require 'explorer'
 require 'optparse'
 require 'digest/md5'
 
+# command option
 getopt = Hash.new
 begin
   OptionParser.new do |opt|
@@ -13,10 +14,12 @@ begin
     opt.on('-u') {|v| getopt[:u] = v }
     opt.on('-d VALUE') {|v| getopt[:d] = v }
     opt.on('-f VALUE') {|v| getopt[:f] = v }
+    opt.on('-p VALUE') {|v| getopt[:p] = v }
+    opt.on('-s VALUE') {|v| getopt[:s] = v }
     opt.parse!(ARGV)
   end
 rescue
-  p "usage: ./encode.rb [-a | -u | -d directory | -f file]"
+  p "usage: ./encode.rb [-a | -u | -d directory | -f file | -p port | -s server]"
   exit! 0
 end
 
@@ -55,32 +58,57 @@ elsif getopt[:f]
   encodelist = $con.execute("select path, flv from filelist where path like '%#{getopt[:f]}'" + movie_option)
 end
 
-$enconst.ENCODE_SERVER.each do |host, port|
-  encodelist.each do |path, flv|
-    src = File.basename(path)
-    dist = Digest::MD5.new.update(src).to_s + ".flv"
+# host
+if getopt[:s]
+  host = getopt[:s]
+else
+  host = $enconst.ENCODER_SERVER
+end
 
-    if flv != dist
+# port
+if getopt[:p]
+  port = getopt[:p]
+else
+  port = $enconst.ENCODER_PORT
+end
+
+# main loop
+encodelist.each do |path, flv|
+  src = File.basename(path)
+  dist = Digest::MD5.new.update(src).to_s + ".flv"
+  
+  if flv != dist
+    lock_file = $$ + "_" + flv
+
+    if !File.exists?(lock_file)
+      # generate lock file
+      `touch #{lock_file}`
+
       # 1. scp avi,wmv,mpg local2remote
       # 2. ffmpeg encode at remote host
       # 3. scp flv remote2local
       # 4. rm all tmp file
       scp_up = "scp -P #{port} \"#{path}\" #{host}:~/"
-      #encode = "ssh -p #{port} #{host} '" + Encoder::ffmpeg(src, dist) + "'"
-      #scp_down = "scp -P #{port} #{host}:~/#{dist} #{$enconst.FLV_DIRECTORY}"
-      #rm = "ssh -p #{port} #{host} 'rm -f *.avi;rm -f *.AVI;rm -f *.flv;rm -f *.wmv'"
+      encode = "ssh -p #{port} #{host} '" + Encoder::ffmpeg(src, dist) + "'"
+      scp_down = "scp -P #{port} #{host}:~/#{dist} #{$enconst.FLV_DIRECTORY}"
+      rm = "ssh -p #{port} #{host} 'rm -f *.avi;rm -f *.AVI;rm -f *.flv;rm -f *.wmv'"
       
       # exec command
       `#{scp_up}`
-      #`#{encode}`
-      #`#{scp_down}`
+      `#{encode}`
+      `#{scp_down}`
       `#{rm}`
-      
-      begin
-        #$con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
-      rescue SQLite3::SQLException
-        p "Exception:" + dist + ":" + path + "\n"
+
+      if File.stat($enconst.FLV_DIRECTORY + flv).size > 0
+        begin
+          $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
+        rescue SQLite3::SQLException
+          p "Exception:" + dist + ":" + path + "\n"
+        end
       end
+
+      # delete lock file
+      `rm -f #{lock_file}`
     end
   end
 end
