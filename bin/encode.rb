@@ -110,7 +110,7 @@ encodelist.each do |path, flv|
       `#{rm}`
       p "e"
 
-      if File.exists($enconst.FLV_DIRECTORY + dist)
+      if File.exists?($enconst.FLV_DIRECTORY + dist)
         if File.stat($enconst.FLV_DIRECTORY + dist).size > 0
           begin
             $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
