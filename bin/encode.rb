@@ -1,13 +1,10 @@
 #!/usr/bin/env ruby
 
 $LOAD_PATH.unshift File.expand_path("../lib", File.dirname(__FILE__))
+require 'encode'
 require 'explorer'
 require 'optparse'
 require 'digest/md5'
-
-def encode(src, dist, size="640x480", sampling=22050, bitrate="800k")
-  "ffmpeg -i \"#{src}\" -vcodec flv -s #{size} -ar #{sampling} -b #{bitrate} -y #{dist}"
-end
 
 getopt = Hash.new
 begin
@@ -34,32 +31,36 @@ elsif getopt[:f]
   encodelist = $con.execute("select path, flv from filelist where path like '%#{getopt[:f]}'" + movie_option)
 end
 
-# 1. scp avi,wmv,mpg local2remote
-# 2. ffmpeg encode at remote host
-# 3. scp flv remote2local
-encodelist.each do |path, flv|
-  src = File.basename(path)
-  dist = Digest::MD5.new.update(src).to_s + ".flv"
+$enconst.each do |host, port|
+  t = Thread.new do 
+    encodelist.each do |path, flv|
+      src = File.basename(path)
+      dist = Digest::MD5.new.update(src).to_s + ".flv"
 
-  if flv != dist
-    # command
-    scp_up = "scp -P #{$const.SSH_PORT} \"#{path}\" #{$const.ENCODE_SERVER}:~/"
-    encode = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} '" + encode(src, dist) + "'"
-    scp_down = "scp -P #{$const.SSH_PORT} #{$const.ENCODE_SERVER}:~/#{dist} #{$const.FLV_DIRECTORY}"
-    rm = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} 'rm -f *.avi;rm -f *.flv;rm -f *.wmv'"
-    #rm = "ssh -p #{$const.SSH_PORT} #{$const.ENCODE_SERVER} 'rm -f \"#{src}\";rm -f #{dist}'"
+      p dist
+      if flv != dist
+        # 1. scp avi,wmv,mpg local2remote
+        # 2. ffmpeg encode at remote host
+        # 3. scp flv remote2local
+        # 4. rm all tmp file
+        scp_up = "scp -P #{port} \"#{path}\" #{host}:~/"
+        #encode = "ssh -p #{port} #{host} '" + Encoder::ffmpeg(src, dist) + "'"
+        #scp_down = "scp -P #{port} #{host}:~/#{dist} #{$enconst.FLV_DIRECTORY}"
+        #rm = "ssh -p #{port} #{host} 'rm -f *.avi;rm -f *.AVI;rm -f *.flv;rm -f *.wmv'"
 
-    # exec command
-    `#{scp_up}`
-    `#{encode}`
-    `#{scp_down}`
-    `#{rm}`
+        # exec command
+        #`#{scp_up}`
+        #`#{encode}`
+        #`#{scp_down}`
+        #`#{rm}`
 
-    begin
-      $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
-    rescue SQLite3::SQLException
-      p "Exception:" + dist + ":" + path + "\n"
+        begin
+          #$con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
+        rescue SQLite3::SQLException
+          p "Exception:" + dist + ":" + path + "\n"
+        end
+      end
     end
   end
+  t.join
 end
-
