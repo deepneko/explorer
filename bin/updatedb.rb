@@ -40,7 +40,7 @@ end
 
 # update or insert
 Explorer.allfile.each do |path|
-  if path.index(exdir) == 0
+  if File.ext(path) == ".flv"
     next
   end
 
