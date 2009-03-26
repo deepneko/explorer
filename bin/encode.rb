@@ -31,7 +31,7 @@ elsif getopt[:f]
   encodelist = $con.execute("select path, flv from filelist where path like '%#{getopt[:f]}'" + movie_option)
 end
 
-$enconst.each do |host, port|
+$enconst.ENCODE_SERVER.each do |host, port|
   t = Thread.new do 
     encodelist.each do |path, flv|
       src = File.basename(path)
