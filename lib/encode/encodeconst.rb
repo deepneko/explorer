@@ -1,7 +1,8 @@
 module Encoder
   class EncoderConst
-    attr_accessor :ENCODE_SERVER
     attr_accessor :FLV_DIRECTORY
+    attr_accessor :ENCODE_SERVER
+    attr_accessor :ENCODE_PORT
     
     def initialize
       @FLV_DIRECTORY = "/usr/home/BACKUP/kotachu/flv/"
