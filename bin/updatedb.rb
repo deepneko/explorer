@@ -46,7 +46,7 @@ Explorer.allfile.each do |path|
   end
 
   date = File.mtime(path).strftime('%Y-%m-%d %H:%M:%S')
-  print date + " " + path + "\n"
+  #print date + " " + path + "\n"
   if i = allpath.index(path)
     if alldate[i] != date
       print "update:" + date + " " + path + "\n"
