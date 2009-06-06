@@ -37,22 +37,21 @@ allpath.each do |path,flv|
     end
   elsif flv
     flvpath = $const.SEARCH_DIR + flv
-    p flvpath
+    p flvpath + ":" + File.size(flvpath).to_s
     if !File.exists?(flvpath)
       print "update(flv doesn't exist):" + path + ":" + flv + "\n"
-      begin
-        $con.execute("update filelist set flv='' where path=\"#{path}\"")
-      rescue SQLite3::SQLException
-        print "Exception:" + date + " " + path + "\n"
-      end
+      #begin
+      #  $con.execute("update filelist set flv='' where path=\"#{path}\"")
+      #rescue SQLite3::SQLException
+      #  print "Exception:" + date + " " + path + "\n"
+      #end
     elsif File.size(flvpath) <= 1
       print "update(flv size zero):" + path + ":" + flv + "\n"
-      begin
-        $con.execute("update filelist set flv='' where path=\"#{path}\"")
-        File.unlink(flvpath)
-      rescue SQLite3::SQLException
-        print "Exception:" + date + " " + path + "\n"
-      end
+      #begin
+      #  $con.execute("update filelist set flv='' where path=\"#{path}\"")
+      #rescue SQLite3::SQLException
+      #  print "Exception:" + date + " " + path + "\n"
+      #end
     end
   end
 end
