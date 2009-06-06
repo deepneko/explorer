@@ -79,7 +79,10 @@ module Explorer
         end
       end
 
-      for file in @fileList
+      flvlist = $con.execute("select path, flv from filelist where path like @absolutePath% and flv!=''").flatten
+
+#      for file in @fileList
+      for fullpath,flv in @flvlist
         for i in 0..@deps
           html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         end
@@ -87,11 +90,10 @@ module Explorer
         #####################################
         # ToDo: this code can be bottleneck #
         #####################################
-        fullpath = @absolutePath + file
-        flv = $con.execute("select flv from filelist where path=\"#{fullpath}\" and flv!=''").flatten
+        #fullpath = @absolutePath + file
+        #flv = $con.execute("select flv from filelist where path=\"#{fullpath}\" and flv!=''").flatten
         img = "<a href=\"javascript:;\" onclick=\"window.open('http://tomoyo.uraz.org/cgi-bin/explorer/bin/player.cgi?src=/flv/" + flv[0].to_s + "', 'winName', 'left=0,top=0,width=670,height=590,status=0,scrollbars=0,menubar=0,location=0,toolbar=0,resizable=0');\"><img src=\"" + @const.PLAY_ICON + "\" align=\"absmiddle\" border=0></a> "
         html += img * flv.size
-        html += @path
 
         html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
         if file == @focusfile
