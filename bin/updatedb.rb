@@ -28,7 +28,7 @@ alldate = $con.execute("select date from filelist").flatten
 
 # if file doesn't exist, delete from database
 allpath.each do |path,flv|
-  if !File.exists?(path)
+  if path && !File.exists?(path)
     print "delete:" + path + "\n"
     begin
       $con.execute("delete from filelist where path=\"#{path}\"")
