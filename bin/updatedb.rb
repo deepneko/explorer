@@ -23,12 +23,12 @@ exdir = getopt[:e]
 Explorer.createtable
 
 # select alldata from table
-allpath = $con.execute("select path,flv from filelist").flatten
+allpath = $con.execute("select path, flv from filelist")
 alldate = $con.execute("select date from filelist").flatten
 
 allpath.each do |path,flv|
-  if path
-    p path + ":" + flv if flv
+  if path && flv
+    p path + ":" + flv
   end
 end
 exit
@@ -37,11 +37,11 @@ exit
 allpath.each do |path,flv|
   if path && !File.exists?(path)
     print "delete:" + path + "\n"
-    begin
-      $con.execute("delete from filelist where path=\"#{path}\"")
-    rescue SQLite3::SQLException
-      print "Exception:" + date + " " + path + "\n"
-    end
+    #begin
+    #  $con.execute("delete from filelist where path=\"#{path}\"")
+    #rescue SQLite3::SQLException
+    #  print "Exception:" + date + " " + path + "\n"
+    #end
   elsif flv
     flvpath = $const.SEARCH_DIR + flv
     if !File.exists?(flvpath)
