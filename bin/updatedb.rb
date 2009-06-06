@@ -24,11 +24,12 @@ exdir = getopt[:e]
 Explorer.createtable
 
 # select alldata from table
-allpath = $con.execute("select path, flv from filelist")
+allpath = $con.execute("select path from filelist").flatten
+allpath_flv = $con.execute("select path, flv from filelist")
 alldate = $con.execute("select date from filelist").flatten
 
 # if file doesn't exist, delete from database
-allpath.each do |path,flv|
+allpath_flv.each do |path,flv|
   if !File.exists?(path)
     print "delete:" + path + "\n"
     begin
