@@ -79,7 +79,7 @@ module Explorer
         end
       end
 
-      flvlist = $con.execute("select path, flv from filelist where path like @absolutePath% and flv!=''").flatten
+      flvlist = $con.execute("select path, flv from filelist where path like '#{@absolutePath}%' and flv!=''").flatten
 
 #      for file in @fileList
       for fullpath,flv in @flvlist
