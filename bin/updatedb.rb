@@ -41,18 +41,19 @@ allpath.each do |path,flv|
     p flvpath
     if !File.exists?(flvpath)
       print "update(flv doesn't exist):" + path + ":" + flv + "\n"
-      #begin
-      #  $con.execute("update filelist set flv='' where path=\"#{path}\"")
-      #rescue SQLite3::SQLException
-      #  print "Exception:" + date + " " + path + "\n"
-      #end
+      begin
+        $con.execute("update filelist set flv='' where path=\"#{path}\"")
+      rescue SQLite3::SQLException
+        print "Exception:" + date + " " + path + "\n"
+      end
     elsif File.size(flvpath) < 1000000
       print "update(flv size zero):" + path + ":" + flv + "\n"
-      #begin
-      #  $con.execute("update filelist set flv='' where path=\"#{path}\"")
-      #rescue SQLite3::SQLException
-      #  print "Exception:" + date + " " + path + "\n"
-      #end
+      begin
+        File.unlink(flvpath)
+        $con.execute("update filelist set flv='' where path=\"#{path}\"")
+      rescue SQLite3::SQLException
+        print "Exception:" + date + " " + path + "\n"
+      end
     end
   end
 end
