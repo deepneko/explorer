@@ -84,7 +84,7 @@ module Explorer
 #        html += fullpath + ":" + flv
 #      end
 #      for file in @fileList
-      for fullpath,flv in flvlist
+      flvlist.each do |fullpath,flv|
         for i in 0..@deps
           html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         end
