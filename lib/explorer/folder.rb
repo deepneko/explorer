@@ -89,7 +89,7 @@ module Explorer
         #####################################
         # ToDo: this code can be bottleneck #
         #####################################
-        html += "<a href=\"javascript:;\" onclick=\"window.open('http://tomoyo.uraz.org/cgi-bin/explorer/bin/player.cgi?src=/flv/" + flv + "', 'winName', 'left=0,top=0,width=670,height=590,status=0,scrollbars=0,menubar=0,location=0,toolbar=0,resizable=0');\"><img src=\"" + @const.PLAY_ICON + "\" align=\"absmiddle\" border=0></a> " if flv
+        html += "<a href=\"javascript:;\" onclick=\"window.open('http://tomoyo.uraz.org/cgi-bin/explorer/bin/player.cgi?src=/flv/" + flv + "', 'winName', 'left=0,top=0,width=670,height=590,status=0,scrollbars=0,menubar=0,location=0,toolbar=0,resizable=0');\"><img src=\"" + @const.PLAY_ICON + "\" align=\"absmiddle\" border=0></a> " if flv && flv != ""
 
         html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
 
