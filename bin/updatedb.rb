@@ -35,7 +35,7 @@ allpath.each do |path,flv|
     rescue SQLite3::SQLException
       print "Exception:" + date + " " + path + "\n"
     end
-  elsif flv
+  elsif flv.strip
     flvpath = $const.SEARCH_DIR + flv
     p flvpath + ":" + File.size(flvpath).to_s
     if !File.exists?(flvpath)
