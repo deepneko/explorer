@@ -84,7 +84,7 @@ module Explorer
 #        html += fullpath + ":" + flv
 #      end
 #      for file in @fileList
-      flvlist.each do |fullpath,flv|
+      flvlist.each do |fullpath, flv|
         for i in 0..@deps
           html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         end
@@ -98,10 +98,12 @@ module Explorer
         #html += img * flv.size
 
         html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
+
+        file = File.basename(fullpath)
         if file == @focusfile
-          html += " <font color=red>" + File.basename(fullpath) + "</font><br>"
+          html += " <font color=red>" + file + "</font><br>"
         else
-          html += " " + File.basename(fullpath) + "<br>"
+          html += " " + file + "<br>"
         end
       end
       
