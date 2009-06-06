@@ -28,7 +28,7 @@ alldate = $con.execute("select date from filelist").flatten
 
 allpath.each do |path,flv|
   if path
-    p path + ":" + flv
+    p path + ":" + flv if flv
   end
 end
 exit
