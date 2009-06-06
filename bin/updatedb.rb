@@ -26,16 +26,9 @@ Explorer.createtable
 allpath = $con.execute("select path, flv from filelist")
 alldate = $con.execute("select date from filelist").flatten
 
-allpath.each do |path,flv|
-  if path && flv
-    p path + ":" + flv
-  end
-end
-exit
-
 # if file doesn't exist, delete from database
 allpath.each do |path,flv|
-  if path && !File.exists?(path)
+  if !File.exists?(path)
     print "delete:" + path + "\n"
     #begin
     #  $con.execute("delete from filelist where path=\"#{path}\"")
