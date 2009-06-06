@@ -79,7 +79,7 @@ module Explorer
         end
       end
 
-      flvlist = $con.execute("select path,flv from filelist where path like '#{@absolutePath}%' and path not like '#{@absolutePath}%/%'")
+      flvlist = $con.execute("select path,flv from filelist where path like '#{@absolutePath}%' and path not like '#{@absolutePath}%/%' and flv!=''")
 #      for file in @fileList
       for fullpath,flv in flvlist
         for i in 0..@deps
