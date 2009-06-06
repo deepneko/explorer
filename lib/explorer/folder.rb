@@ -80,8 +80,8 @@ module Explorer
       end
 
       flvlist = $con.execute("select path,flv from filelist where path like '#{@absolutePath}%' and path not like '#{@absolutePath}%/%' and flv!=''")
-      for fullpath,flv in @flvlist
-        html += fullpath + ":" + flv + "<br>"
+      for fullpath in @flvlist
+        html += fullpath + "<br>"
       end
 
 #      for file in @fileList
