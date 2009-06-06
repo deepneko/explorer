@@ -28,8 +28,6 @@ alldate = $con.execute("select date from filelist").flatten
 
 # if file doesn't exist, delete from database
 allpath.each do |path,flv|
-  flv.strip! if flv
-
   if !File.exists?(path)
     print "delete:" + path + "\n"
     begin
@@ -38,6 +36,9 @@ allpath.each do |path,flv|
       print "Exception:" + date + " " + path + "\n"
     end
   elsif flv
+    if flv == nil || flv == ""
+      p "flv nil"
+    end
     flvpath = $const.SEARCH_DIR + flv
     p flvpath + ":" + File.size(flvpath).to_s
     if !File.exists?(flvpath)
