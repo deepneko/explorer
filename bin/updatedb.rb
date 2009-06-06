@@ -2,6 +2,7 @@
 
 $LOAD_PATH.unshift File.expand_path("../lib", File.dirname(__FILE__))
 require 'explorer'
+require 'encode'
 require 'optparse'
 
 # command option
@@ -36,7 +37,7 @@ allpath.each do |path,flv|
       print "Exception:" + date + " " + path + "\n"
     end
   elsif flv && flv != ""
-    flvpath = $const.SEARCH_DIR + flv
+    flvpath = $enconst.FLV_DIRECTORY + flv
     p flvpath
     if !File.exists?(flvpath)
       print "update(flv doesn't exist):" + path + ":" + flv + "\n"
