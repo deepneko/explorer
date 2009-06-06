@@ -37,6 +37,7 @@ allpath.each do |path,flv|
     end
   elsif flv && flv != ""
     flvpath = $const.SEARCH_DIR + flv
+    p flvpath
     if !File.exists?(flvpath)
       print "update(flv doesn't exist):" + path + ":" + flv + "\n"
       #begin
