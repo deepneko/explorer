@@ -79,29 +79,29 @@ module Explorer
         end
       end
 
-      flvlist = $con.execute("select path,flv from filelist where path like '#{@absolutePath}%' and flv!=''")
+      flvlist = $con.execute("select path,flv from filelist where path like '#{@absolutePath}%' and path not like '#{@absolutePath}%/%' and flv!=''")
 
 #      for file in @fileList
-      for fullpath,flv in @flvlist
-        for i in 0..@deps
-          html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-        end
+      #for fullpath,flv in @flvlist
+      #  for i in 0..@deps
+      #    html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+      #  end
 
         #####################################
         # ToDo: this code can be bottleneck #
         #####################################
         #fullpath = @absolutePath + file
         #flv = $con.execute("select flv from filelist where path=\"#{fullpath}\" and flv!=''").flatten
-        img = "<a href=\"javascript:;\" onclick=\"window.open('http://tomoyo.uraz.org/cgi-bin/explorer/bin/player.cgi?src=/flv/" + flv[0].to_s + "', 'winName', 'left=0,top=0,width=670,height=590,status=0,scrollbars=0,menubar=0,location=0,toolbar=0,resizable=0');\"><img src=\"" + @const.PLAY_ICON + "\" align=\"absmiddle\" border=0></a> "
-        html += img * flv.size
+      #  img = "<a href=\"javascript:;\" onclick=\"window.open('http://tomoyo.uraz.org/cgi-bin/explorer/bin/player.cgi?src=/flv/" + flv[0].to_s + "', 'winName', 'left=0,top=0,width=670,height=590,status=0,scrollbars=0,menubar=0,location=0,toolbar=0,resizable=0');\"><img src=\"" + @const.PLAY_ICON + "\" align=\"absmiddle\" border=0></a> "
+      #  html += img * flv.size
 
-        html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
-        if file == @focusfile
-          html += " <font color=red>" + file + "</font><br>"
-        else
-          html += " " + file + "<br>"
-        end
-      end
+#        html += "<img src=\"" + @const.FILE_ICON + "\" align=\"absmiddle\" border=0>"
+#        if file == @focusfile
+#          html += " <font color=red>" + file + "</font><br>"
+#        else
+#          html += " " + file + "<br>"
+#        end
+#      end
       
       return html
     end
