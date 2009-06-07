@@ -61,6 +61,10 @@ elsif getopt[:d]
   encodelist = $con.execute("select path, flv from filelist where path like '#{getopt[:d]}%'" + movie_option)
 end
 
+encodelist.each do |path, flv|
+  p path
+end
+
 # main loop
 encodelist.each do |path, flv|
   src = File.basename(path)
