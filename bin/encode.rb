@@ -29,9 +29,9 @@ movie_option = " and (path like '%.avi' or path like '%.wmv')"
 if getopt[:u]
   encodelist = $con.execute("select path, flv from filelist")
   encodelist.each do |path, flv|
-    if flv
+    if flv && flv != ""
       flv = $enconst.FLV_DIRECTORY + flv
-      if File.exists?(flv) && File.stat(flv).size <= 1
+      if File.exists?(flv) && File.stat(flv).size <= 1000000
         $con.execute("update filelist set flv='' where flv='#{flv}'")
         `rm -f #{flv}`
       end
@@ -42,7 +42,7 @@ if getopt[:u]
     flv = $con.execute("select path, flv from filelist where flv='#{File.basename(file)}'").flatten
     if flv.size == 0
       `rm -f #{file}`
-    elsif File.stat(file).size <= 1
+    elsif File.stat(file).size <= 1000000
       `rm -f #{file}`
     end
   end
@@ -55,9 +55,7 @@ if getopt[:a]
   encodelist = $con.execute("select path, flv from filelist where flv=''" + movie_option)
 elsif getopt[:f]
   encodelist = $con.execute("select path, flv from filelist where path like '%#{getopt[:f]}'" + movie_option)
-end
-
-if getopt[:d] == "default"
+elsif getopt[:d] == "default"
   encodelist = $con.execute("select path, flv from filelist where path like '#{$enconst.ENCODE_DIRECTORY}%'" + movie_option)
 elsif getopt[:d]
   encodelist = $con.execute("select path, flv from filelist where path like '#{getopt[:d]}%'" + movie_option)
@@ -77,18 +75,20 @@ encodelist.each do |path, flv|
       `touch #{lock_file}`
 
       # ffmpeg encode
-      encode = "ssh -p #{port} #{host} '" + Encoder::ffmpeg(src, dist) + "'"
+      encode = Encoder::ffmpeg(path, $enconst.FLV_DIRECTORY+dist)
       
       # exec command
       `#{encode}`
 
-      if File.exists?($enconst.FLV_DIRECTORY + dist)
-        if File.stat($enconst.FLV_DIRECTORY + dist).size > 0
+      if File.exists?(dist)
+        if File.stat(dist).size > 1000000
           begin
             $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
           rescue SQLite3::SQLException
             p "Exception:" + dist + ":" + path + "\n"
           end
+        else
+          `rm -f #{$enconst.FLV_DIRECTORY + dist}`
         end
       end
 
