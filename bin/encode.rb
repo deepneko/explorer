@@ -64,10 +64,11 @@ end
 # main loop
 encodelist.each do |path, flv|
   src = File.basename(path)
-  dist = Digest::MD5.new.update(src).to_s + ".flv"
+  flv_name = Digest::MD5.new.update(src).to_s + ".flv"
+  dist = $enconst.FLV_DIRECTORY + flv_name
   
-  if flv != dist
-    lock_file = dist
+  if flv != flv_name
+    lock_file = flv_name
 
     if !File.exists?(lock_file)
       # generate lock file
@@ -75,20 +76,21 @@ encodelist.each do |path, flv|
       `touch #{lock_file}`
 
       # ffmpeg encode
-      encode = Encoder::ffmpeg(path, $enconst.FLV_DIRECTORY+dist)
+      encode = Encoder::ffmpeg(path, dist)
       
       # exec command
       `#{encode}`
 
       if File.exists?(dist)
+        p "filesize:" + File.stat(dist).size.to_s
         if File.stat(dist).size > 1000000
           begin
-            $con.execute("update filelist set flv='#{dist}' where path=\"#{path}\"")
+            $con.execute("update filelist set flv='#{flv_name}' where path=\"#{path}\"")
           rescue SQLite3::SQLException
             p "Exception:" + dist + ":" + path + "\n"
           end
         else
-          `rm -f #{$enconst.FLV_DIRECTORY + dist}`
+          `rm -f #{dist}`
         end
       end
 
